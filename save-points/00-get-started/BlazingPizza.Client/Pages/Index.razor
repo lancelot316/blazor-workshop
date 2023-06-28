@@ -46,12 +46,13 @@
         </a>
     </div>
 </div>
-@if(OrderState.ShowingConfigureDialog)
-{
-    <ConfigurePizzaDialog Pizza="OrderState.ConfiguringPizza" 
+
+<TemplatedDialog Show="@OrderState.ShowingConfigureDialog">
+    <ConfigurePizzaDialog Pizza="OrderState.ConfiguringPizza"
                           OnCancel="OrderState.CancelConfiguringPizzaDialog"
-                          OnConfirm="OrderState.ConfirmConfiguringPizzaDialog"/>
-}
+                          OnConfirm="OrderState.ConfirmConfiguringPizzaDialog" />
+</TemplatedDialog>
+
 
 @code {
     List<PizzaSpecial> specials;
@@ -66,7 +67,7 @@
 
     private async Task RemovePizza(Pizza configuredPizza)
     {
-        if(await JS.Confirm($"Remove {configuredPizza.Special.Name} from your order?" ))
+        if (await JS.Confirm($"Remove {configuredPizza.Special.Name} from your order?"))
         {
             OrderState.RemoveConfiguredPizza(configuredPizza);
         }
